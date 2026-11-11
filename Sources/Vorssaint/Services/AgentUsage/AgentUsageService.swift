@@ -123,7 +123,7 @@ final class AgentUsageService: ObservableObject {
 
     func syncWithPreferences() {
         CodexProfileLimitsService.shared.synchronize()
-        guard NotchAgentSupport.isEnabled() else { stop(); return }
+        guard NotchAgentSupport.isRunnable() else { stop(); return }
         let wanted = NotchAgentSupport.providers()
         let profile = ClaudeAccountProfile.selected()
         let showingPage = pageVisible
@@ -190,7 +190,7 @@ final class AgentUsageService: ObservableObject {
         // A first read still going stops at its next chunk, so the wait
         // below is short.
         if running { cancellation.cancel() }
-        settleArchive(keeping: keeps && NotchAgentSupport.isEnabled())
+        settleArchive(keeping: keeps && NotchAgentSupport.isRunnable())
         guard running else { return }
         running = false
         cancelClaudeLimits()

@@ -6,6 +6,9 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+- See your AI agents' plan limits and today's usage for Claude, Codex, OpenCode and GitHub Copilot in the menu panel, without turning on the Dynamic Island. It is off by default; turn it on in Panel layout settings.
+
 ## [3.4.4] - 2026-11-11
 
 ### Summary

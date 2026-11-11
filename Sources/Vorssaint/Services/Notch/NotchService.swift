@@ -1173,7 +1173,7 @@ final class NotchService: ObservableObject {
         if !NotchFileToolsService.shared.offersMediaDrop { endFileDrop() }
         // Paused while the island is away, the section still stops at once
         // when it is turned off.
-        if !NotchAgentSupport.isEnabled() { AgentUsageService.shared.stop() }
+        if !NotchAgentSupport.isRunnable() { AgentUsageService.shared.stop() }
         guard !suspended else {
             if session.canRunTimer { NotchTimerService.shared.syncWithPreferences() }
             else { NotchTimerService.shared.suspend() }
@@ -1344,7 +1344,7 @@ final class NotchService: ObservableObject {
         NotchDownloadService.shared.stop()
         NotchCalendarService.shared.stop()
         NotchNotificationService.shared.stop()
-        AgentUsageService.shared.pause()
+        if !NotchAgentSupport.panelShows() { AgentUsageService.shared.pause() }
         settingsSignature = ""
         expanded = false
         peeking = false

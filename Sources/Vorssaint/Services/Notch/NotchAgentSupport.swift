@@ -76,6 +76,17 @@ enum NotchAgentSupport {
         NotchSupport.isEnabled(in: defaults) && sectionShows(in: defaults)
     }
 
+    /// The menu panel's agents section is installed and switched on, with or
+    /// without the island.
+    static func panelShows(in defaults: UserDefaults = .standard) -> Bool {
+        AppFeature.notchAgents.isAvailable(in: defaults) && defaults.bool(forKey: DefaultsKey.panelShowAgents)
+    }
+
+    /// Whether the usage service should read: for the island or the panel.
+    static func isRunnable(in defaults: UserDefaults = .standard) -> Bool {
+        isEnabled(in: defaults) || panelShows(in: defaults)
+    }
+
     /// The AI section is installed, switched on and shown, whether or not the
     /// island itself is.
     static func sectionShows(in defaults: UserDefaults = .standard) -> Bool {

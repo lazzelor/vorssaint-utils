@@ -70,7 +70,7 @@ final class CodexProfileLimitsService: ObservableObject {
 
     /// Only while an account card can show: a hidden Limits card asks nothing.
     var isEnabled: Bool {
-        NotchAgentSupport.isEnabled(in: defaults) && NotchAgentSupport.showsCodexAccounts(in: defaults)
+        NotchAgentSupport.isRunnable(in: defaults) && NotchAgentSupport.showsCodexAccounts(in: defaults)
     }
 
     /// Follows the saved homes and whether Codex is on. Asks only what is
