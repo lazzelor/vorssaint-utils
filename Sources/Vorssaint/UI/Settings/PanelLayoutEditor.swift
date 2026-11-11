@@ -84,7 +84,10 @@ struct PanelLayoutEditor: View {
                                         hovered = nil
                                     }
                                 },
-                                onVisibilityChange: { visibilityChanges += 1 })
+                                onVisibilityChange: {
+                                    visibilityChanges += 1
+                                    if id == .agents { AgentUsageService.shared.syncWithPreferences() }
+                                })
                     .onDrop(of: [UTType.text],
                             delegate: PanelOrderDropDelegate(target: id, order: $order, dragging: $dragging))
                 if id != ids.last {
@@ -132,6 +135,7 @@ private extension PanelSectionID {
         case .controls: return text.sectionControls
         case .toggles: return text.sectionToggles
         case .wallpaper: return FeatureStrings.wallpaper(L10n.shared.language).panelDescription
+        case .agents: return AgentProvider.allCases.map(\.displayName).joined(separator: " · ")
         }
     }
 }

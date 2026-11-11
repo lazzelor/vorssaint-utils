@@ -11,7 +11,7 @@ protocol PanelOrderItem: RawRepresentable, CaseIterable, Hashable where RawValue
 /// renaming a case would orphan a user's stored layout — keep them stable.
 enum PanelSectionID: String, CaseIterable, Identifiable, Hashable {
     case keepAwake, brightness, mixer, system, network, disk, power, fanControl, utilities, controls,
-         toggles, wallpaper
+         toggles, wallpaper, agents
 
     var id: String { rawValue }
 
@@ -30,6 +30,7 @@ enum PanelSectionID: String, CaseIterable, Identifiable, Hashable {
         case .controls: return s.quickControlsSection
         case .toggles: return FeatureStrings.quickToggles(L10n.shared.language).pageTitle
         case .wallpaper: return FeatureStrings.wallpaper(L10n.shared.language).pageTitle
+        case .agents: return FeatureStrings.notchAgents(L10n.shared.language).title
         }
     }
 
@@ -47,6 +48,7 @@ enum PanelSectionID: String, CaseIterable, Identifiable, Hashable {
         case .controls: return "switch.2"
         case .toggles: return "togglepower"
         case .wallpaper: return "photo.on.rectangle"
+        case .agents: return "sparkles"
         }
     }
 
@@ -67,11 +69,13 @@ enum PanelSectionID: String, CaseIterable, Identifiable, Hashable {
         case .controls: return DefaultsKey.panelShowControls
         case .toggles: return DefaultsKey.panelShowToggles
         case .wallpaper: return DefaultsKey.panelShowWallpaper
+        case .agents: return DefaultsKey.panelShowAgents
         }
     }
 
     /// Installed sections show by default and remain individually hideable.
-    var shownByDefault: Bool { true }
+    /// Agents stays off until chosen: showing it reads local session logs.
+    var shownByDefault: Bool { self != .agents }
 
     /// Hub features that keep this section alive: with all of them off, the
     /// section leaves the panel, the section navigation and the layout
@@ -98,6 +102,7 @@ enum PanelSectionID: String, CaseIterable, Identifiable, Hashable {
                                 .middleClick, .textSnippets, .superKey, .radialMenu, .mouseClickDebounce, .notch]
         case .toggles: return [.quickToggles, .micMute, .quitApps]
         case .wallpaper: return [.wallpaper]
+        case .agents: return [.notchAgents]
         }
     }
 
